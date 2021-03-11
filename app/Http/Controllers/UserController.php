@@ -16,7 +16,21 @@ class UserController extends Controller
 
     public function index(){
         $libros = $this->obtenerLibros(Auth::user()->id);
-        return view('mis-libros', ['libros' => $libros]);
+        return view('mis-libros', ['libros' => $libros, 'eliminado' => false]);
+    }
+
+    public function borrar($libroId){
+        $usuarioId = Auth::user()->id;
+        $this->borrarLibroDelUsuario($libroId, $usuarioId);
+        $libros = $this->obtenerLibros(Auth::user()->id);
+        return view('mis-libros', ['libros' => $libros, 'eliminado' => true]);
+
+    }
+
+    public function borrarLibroDelUsuario($libroId, $usuarioId){
+        $borrarLibro = DB::table('users_books')
+            ->where(['usuario_id' => intval($usuarioId), 'libro_id' => intval($libroId)])
+            ->delete();
     }
 
     public function registrarLibro($libroId, $nombre, $descripcion, $paginas, $autor){

@@ -1,0 +1,110 @@
+<template>
+    <div class="modal animated fadeIn" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header px-3 py-2 bg-light text-dark">
+                    <div class="w-100 text-center">
+                        <h6 id="texto-encabezado" class="text-dark m-0" v-if="detallesLibro !== null">
+                            {{detallesLibro.nombre}}
+                        </h6>
+                    </div>
+                    <button  type="button" class="close" data-dismiss="modal" aria-label="Close" @click="cerrarModal">
+                        <span aria-hidden="true" class="text-dark">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" v-if="detallesLibro !== null">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <i class="fas fa-book fa-5x"></i>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-auto">
+                            <p class="font-weight-bold">Titulo: </p>
+                        </div>
+                        <div class="col">
+                            <p>
+                                {{detallesLibro.nombre}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <p class="font-weight-bold">Autor: </p>
+                        </div>
+                        <div class="col">
+                            <p>
+                                {{detallesLibro.autor}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <p class="font-weight-bold">Descripcion: </p>
+                        </div>
+                        <div class="col">
+                            <p v-html="detallesLibro.descripcion.substring(0, 300) + '...'"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <p class="font-weight-bold">Año: </p>
+                        </div>
+                        <div class="col">
+                            <p>
+                                {{detallesLibro.year}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <p class="font-weight-bold">Idioma: </p>
+                        </div>
+                        <div class="col">
+                            <p>
+                                {{detallesLibro.idioma}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center m-1">
+                        <div class="col-auto">
+                            <h6 class="font-weight-bold">Categorias/Etiquetas</h6>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-auto" v-for="categoria in detallesLibro.categorias">
+                            <span class="badge badge-pill badge-light"><i class="fas fa-tag text-dark mr-2"></i><span class="categoria">{{categoria.name}}</span></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "DetalleDelLibroModal",
+    props: ["detallesLibro"],
+    methods: {
+        cerrarModal(){
+            $('#myModal').modal('hide');
+            this.$emit("cerrarDetallesModal");
+        },
+    },
+    mounted() {
+        $('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+}
+</script>
+
+<style scoped>
+    .categoria{
+        font-size: 0.9rem;
+    }
+</style>

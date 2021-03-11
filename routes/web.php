@@ -21,5 +21,6 @@ Auth::routes();
 
 Route::get('/libros', [App\Http\Controllers\HomeController::class, 'index'])->name('libros');
 Route::get('/mislibros', [App\Http\Controllers\UserController::class, 'index'])->name('mis-libros');
+Route::delete('/borrar/{libroId}', [App\Http\Controllers\UserController::class, 'borrar'])->name('borrar');
 
 
