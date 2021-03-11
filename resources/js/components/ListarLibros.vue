@@ -2,7 +2,14 @@
     <div class="row">
         <div class="col">
             <div class="row" v-if="mostrarDetallesLibroModal">
-                <detalle-del-libro-modal :detallesLibro="detallesLibro" v-on:cerrarDetallesModal="cerrarModal"></detalle-del-libro-modal>
+                <div class="col">
+                    <detalle-del-libro-modal :detallesLibro="detallesLibro" v-on:cerrarDetallesModal="cerrarDetallesModal"></detalle-del-libro-modal>
+                </div>
+            </div>
+            <div class="row"  v-if="mostrarFiltrarLibrosModal">
+                <div class="col">
+                    <filtrar-libros v-on:aplicarFiltros="aplicarFiltros" v-on:cerrarFiltroModal="cerrarFiltroModal" v-if="mostrarFiltrarLibrosModal"></filtrar-libros>
+                </div>
             </div>
             <div class="row" v-if="agregado == true">
                 <div class="col">
@@ -12,6 +19,11 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <button class="btn btn-outline-dark" @click="mostrarModalDeFiltro"><i class="fas fa-filter mr-2"></i>Filtrar</button>
                 </div>
             </div>
             <div class="row">
@@ -46,27 +58,29 @@
 </template>
 
 <script>
-import { obtenerLibros, obtenerMisLibros }  from '../API/requests';
+import { obtenerLibros, obtenerMisLibros, obtenerLibrosConFiltro }  from '../API/requests';
 import Libro from './Libro';
 import DetalleDelLibroModal from "./DetalleDelLibroModal";
+import FiltrarLibros from "./FiltrarLibros";
 export default {
     name: "ListarLibros",
+    components: {
+        "detalle-del-libro-modal": DetalleDelLibroModal,
+        "libro-component": Libro,
+        "filtrar-libros": FiltrarLibros
+    },
     data(){
         return {
             libros: [],
             usuarioId: null,
             agregado: false,
             detallesLibro: null,
-            mostrarDetallesLibroModal: false
+            mostrarDetallesLibroModal: false,
+            mostrarFiltrarLibrosModal: false
         }
     },
-    components: {
-        "detalle-del-libro-modal": DetalleDelLibroModal,
-        "libro-component": Libro
-    },
     methods: {
-       async asignarLibros(){
-           const libros = await obtenerLibros();
+       asignarLibros(libros){
             libros.forEach(libro => {
                 this.libros.push({
                     id: parseInt(libro.ID),
@@ -75,6 +89,7 @@ export default {
                     autor: libro.author,
                     paginas: parseInt(libro.pages),
                     categorias: libro.categories,
+                    etiquetas: libro.tags,
                     year: libro.publisher_date,
                     idioma: libro.language
                 })
@@ -86,23 +101,38 @@ export default {
                this.agregado = false;
            }, 3000);
         },
-        async obtenerMisLibros(){
-            const response = await obtenerMisLibros(this.usuarioId);
-            console.log(response);
-        },
         mostrarDetallesLibro(libro) {
            this.detallesLibro = libro;
            this.mostrarDetallesLibroModal = true;
         },
-        cerrarModal(){
+        mostrarModalDeFiltro(){
+          this.mostrarFiltrarLibrosModal = true;
+        },
+        cerrarDetallesModal(){
            this.mostrarDetallesLibroModal = false;
+        },
+        aplicarFiltros(filtros){
+           this.obtenerLibrosConFiltro(filtros);
+           this.mostrarFiltrarLibrosModal = false;
+        },
+        cerrarFiltroModal(){
+            this.mostrarFiltrarLibrosModal = false;
+        },
+        async obtenerLibros(){
+            this.libros = [];
+            const libros = await obtenerLibros();
+            this.asignarLibros(libros);
+       },
+        async obtenerLibrosConFiltro(filtros){
+            this.libros = [];
+            const libros = await obtenerLibrosConFiltro(filtros.autor, filtros.lenguaje, filtros.year);
+            this.asignarLibros(libros);
         }
     },
     mounted(){
         Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
         this.usuarioId = this.$userId;
-        this.asignarLibros();
-        this.obtenerMisLibros();
+        this.obtenerLibros();
     }
 
 }

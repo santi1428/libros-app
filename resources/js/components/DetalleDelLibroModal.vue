@@ -1,5 +1,5 @@
 <template>
-    <div class="modal animated fadeIn" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal animated fadeIn" tabindex="-1" role="dialog" id="detalle-libro-modal">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header px-3 py-2 bg-light text-dark">
@@ -67,14 +67,17 @@
                             </p>
                         </div>
                     </div>
-                    <div class="row justify-content-center m-1">
+                    <div class="row">
                         <div class="col-auto">
-                            <h6 class="font-weight-bold">Categorias/Etiquetas</h6>
+                            <p class="font-weight-bold">Categorias: </p>
+                        </div>
+                        <div class="col">
+                            <span v-for="categoria in detallesLibro.categorias" class="mr-2">{{categoria.name + ","}}</span>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-auto" v-for="categoria in detallesLibro.categorias">
-                            <span class="badge badge-pill badge-light"><i class="fas fa-tag text-dark mr-2"></i><span class="categoria">{{categoria.name}}</span></span>
+                    <div class="row justify-content-center mt-3 mb-2">
+                        <div class="col-auto" v-for="etiqueta in detallesLibro.etiquetas">
+                            <span class="badge badge-pill badge-light"><i class="fas fa-tag text-dark mr-2"></i><span class="categoria">{{etiqueta.name}}</span></span>
                         </div>
                     </div>
                 </div>
@@ -90,12 +93,12 @@ export default {
     props: ["detallesLibro"],
     methods: {
         cerrarModal(){
-            $('#myModal').modal('hide');
+            $('#detalle-libro-modal').modal('hide');
             this.$emit("cerrarDetallesModal");
         },
     },
     mounted() {
-        $('#myModal').modal({
+        $('#detalle-libro-modal').modal({
             backdrop: 'static',
             keyboard: false
         });

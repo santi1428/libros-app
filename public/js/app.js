@@ -1942,17 +1942,120 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "DetalleDelLibroModal",
   props: ["detallesLibro"],
   methods: {
     cerrarModal: function cerrarModal() {
-      $('#myModal').modal('hide');
+      $('#detalle-libro-modal').modal('hide');
       this.$emit("cerrarDetallesModal");
     }
   },
   mounted: function mounted() {
-    $('#myModal').modal({
+    $('#detalle-libro-modal').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FiltrarLibros.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FiltrarLibros.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "FiltrarLibros",
+  data: function data() {
+    return {
+      autor: "",
+      year: "",
+      lenguaje: "spanish"
+    };
+  },
+  methods: {
+    aplicarFiltros: function aplicarFiltros() {
+      $('#filtrar-libros-modal').modal('hide');
+      this.$emit("aplicarFiltros", {
+        autor: this.autor,
+        year: this.year,
+        lenguaje: this.lenguaje
+      });
+    },
+    cerrarModal: function cerrarModal() {
+      $('#filtrar-libros-modal').modal('hide');
+      this.$emit("cerrarFiltroModal");
+    }
+  },
+  mounted: function mounted() {
+    $('#filtrar-libros-modal').modal({
       backdrop: 'static',
       keyboard: false
     });
@@ -2097,6 +2200,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _API_requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../API/requests */ "./resources/js/API/requests.js");
 /* harmony import */ var _Libro__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Libro */ "./resources/js/components/Libro.vue");
 /* harmony import */ var _DetalleDelLibroModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DetalleDelLibroModal */ "./resources/js/components/DetalleDelLibroModal.vue");
+/* harmony import */ var _FiltrarLibros__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FiltrarLibros */ "./resources/js/components/FiltrarLibros.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2150,59 +2254,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ListarLibros",
+  components: {
+    "detalle-del-libro-modal": _DetalleDelLibroModal__WEBPACK_IMPORTED_MODULE_3__.default,
+    "libro-component": _Libro__WEBPACK_IMPORTED_MODULE_2__.default,
+    "filtrar-libros": _FiltrarLibros__WEBPACK_IMPORTED_MODULE_4__.default
+  },
   data: function data() {
     return {
       libros: [],
       usuarioId: null,
       agregado: false,
       detallesLibro: null,
-      mostrarDetallesLibroModal: false
+      mostrarDetallesLibroModal: false,
+      mostrarFiltrarLibrosModal: false
     };
   },
-  components: {
-    "detalle-del-libro-modal": _DetalleDelLibroModal__WEBPACK_IMPORTED_MODULE_3__.default,
-    "libro-component": _Libro__WEBPACK_IMPORTED_MODULE_2__.default
-  },
   methods: {
-    asignarLibros: function asignarLibros() {
+    asignarLibros: function asignarLibros(libros) {
       var _this = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var libros;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return (0,_API_requests__WEBPACK_IMPORTED_MODULE_1__.obtenerLibros)();
-
-              case 2:
-                libros = _context.sent;
-                libros.forEach(function (libro) {
-                  _this.libros.push({
-                    id: parseInt(libro.ID),
-                    nombre: libro.title,
-                    descripcion: libro.content,
-                    autor: libro.author,
-                    paginas: parseInt(libro.pages),
-                    categorias: libro.categories,
-                    year: libro.publisher_date,
-                    idioma: libro.language
-                  });
-                });
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      libros.forEach(function (libro) {
+        _this.libros.push({
+          id: parseInt(libro.ID),
+          nombre: libro.title,
+          descripcion: libro.content,
+          autor: libro.author,
+          paginas: parseInt(libro.pages),
+          categorias: libro.categories,
+          etiquetas: libro.tags,
+          year: libro.publisher_date,
+          idioma: libro.language
+        });
+      });
     },
     mostrarAlerta: function mostrarAlerta() {
       var _this2 = this;
@@ -2212,43 +2313,80 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this2.agregado = false;
       }, 3000);
     },
-    obtenerMisLibros: function obtenerMisLibros() {
+    mostrarDetallesLibro: function mostrarDetallesLibro(libro) {
+      this.detallesLibro = libro;
+      this.mostrarDetallesLibroModal = true;
+    },
+    mostrarModalDeFiltro: function mostrarModalDeFiltro() {
+      this.mostrarFiltrarLibrosModal = true;
+    },
+    cerrarDetallesModal: function cerrarDetallesModal() {
+      this.mostrarDetallesLibroModal = false;
+    },
+    aplicarFiltros: function aplicarFiltros(filtros) {
+      this.obtenerLibrosConFiltro(filtros);
+      this.mostrarFiltrarLibrosModal = false;
+    },
+    cerrarFiltroModal: function cerrarFiltroModal() {
+      this.mostrarFiltrarLibrosModal = false;
+    },
+    obtenerLibros: function obtenerLibros() {
       var _this3 = this;
 
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var libros;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this3.libros = [];
+                _context.next = 3;
+                return (0,_API_requests__WEBPACK_IMPORTED_MODULE_1__.obtenerLibros)();
+
+              case 3:
+                libros = _context.sent;
+
+                _this3.asignarLibros(libros);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    obtenerLibrosConFiltro: function obtenerLibrosConFiltro(filtros) {
+      var _this4 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response;
+        var libros;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return (0,_API_requests__WEBPACK_IMPORTED_MODULE_1__.obtenerMisLibros)(_this3.usuarioId);
+                _this4.libros = [];
+                _context2.next = 3;
+                return (0,_API_requests__WEBPACK_IMPORTED_MODULE_1__.obtenerLibrosConFiltro)(filtros.autor, filtros.lenguaje, filtros.year);
 
-              case 2:
-                response = _context2.sent;
-                console.log(response);
+              case 3:
+                libros = _context2.sent;
 
-              case 4:
+                _this4.asignarLibros(libros);
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
-    },
-    mostrarDetallesLibro: function mostrarDetallesLibro(libro) {
-      this.detallesLibro = libro;
-      this.mostrarDetallesLibroModal = true;
-    },
-    cerrarModal: function cerrarModal() {
-      this.mostrarDetallesLibroModal = false;
     }
   },
   mounted: function mounted() {
     Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
     this.usuarioId = this.$userId;
-    this.asignarLibros();
-    this.obtenerMisLibros();
+    this.obtenerLibros();
   }
 });
 
@@ -2283,7 +2421,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "agregarLibro": () => (/* binding */ agregarLibro),
 /* harmony export */   "obtenerLibros": () => (/* binding */ obtenerLibros),
-/* harmony export */   "obtenerMisLibros": () => (/* binding */ obtenerMisLibros)
+/* harmony export */   "obtenerMisLibros": () => (/* binding */ obtenerMisLibros),
+/* harmony export */   "obtenerLibrosConFiltro": () => (/* binding */ obtenerLibrosConFiltro)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -2347,7 +2486,7 @@ var obtenerLibros = /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_1___default().get('https://www.etnassoft.com/api/v1/get/?criteria=most_viewed&num_items=4');
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_conf__WEBPACK_IMPORTED_MODULE_2__.API_ENDPOINT, "/?criteria=most_viewed&num_items=4&lang=english"));
 
           case 2:
             request = _context2.sent;
@@ -2366,15 +2505,15 @@ var obtenerLibros = /*#__PURE__*/function () {
   };
 }();
 
-var obtenerMisLibros = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(usuarioId) {
+var obtenerLibrosConFiltro = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(autor, year, lenguaje) {
     var request;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_conf__WEBPACK_IMPORTED_MODULE_2__.APP_ENDPOINT, "/api/obtenerlibros/").concat(usuarioId));
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_conf__WEBPACK_IMPORTED_MODULE_2__.API_ENDPOINT, "/?num_items=4&lang=").concat(lenguaje, "&publisher_date=").concat(year, "&book_author=").concat(autor));
 
           case 2:
             request = _context3.sent;
@@ -2388,8 +2527,35 @@ var obtenerMisLibros = /*#__PURE__*/function () {
     }, _callee3);
   }));
 
-  return function obtenerMisLibros(_x3) {
+  return function obtenerLibrosConFiltro(_x3, _x4, _x5) {
     return _ref3.apply(this, arguments);
+  };
+}();
+
+var obtenerMisLibros = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(usuarioId) {
+    var request;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.next = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_conf__WEBPACK_IMPORTED_MODULE_2__.APP_ENDPOINT, "/api/obtenerlibros/").concat(usuarioId));
+
+          case 2:
+            request = _context4.sent;
+            return _context4.abrupt("return", request.data);
+
+          case 4:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+
+  return function obtenerMisLibros(_x6) {
+    return _ref4.apply(this, arguments);
   };
 }();
 
@@ -39069,6 +39235,45 @@ component.options.__file = "resources/js/components/DetalleDelLibroModal.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/FiltrarLibros.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/FiltrarLibros.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _FiltrarLibros_vue_vue_type_template_id_9587dda4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FiltrarLibros.vue?vue&type=template&id=9587dda4&scoped=true& */ "./resources/js/components/FiltrarLibros.vue?vue&type=template&id=9587dda4&scoped=true&");
+/* harmony import */ var _FiltrarLibros_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FiltrarLibros.vue?vue&type=script&lang=js& */ "./resources/js/components/FiltrarLibros.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _FiltrarLibros_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _FiltrarLibros_vue_vue_type_template_id_9587dda4_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _FiltrarLibros_vue_vue_type_template_id_9587dda4_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "9587dda4",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FiltrarLibros.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Inicio.vue":
 /*!********************************************!*\
   !*** ./resources/js/components/Inicio.vue ***!
@@ -39202,6 +39407,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/FiltrarLibros.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/FiltrarLibros.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FiltrarLibros_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FiltrarLibros.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FiltrarLibros.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FiltrarLibros_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Inicio.vue?vue&type=script&lang=js&":
 /*!*********************************************************************!*\
   !*** ./resources/js/components/Inicio.vue?vue&type=script&lang=js& ***!
@@ -39280,6 +39501,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/FiltrarLibros.vue?vue&type=template&id=9587dda4&scoped=true&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/FiltrarLibros.vue?vue&type=template&id=9587dda4&scoped=true& ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FiltrarLibros_vue_vue_type_template_id_9587dda4_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FiltrarLibros_vue_vue_type_template_id_9587dda4_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FiltrarLibros_vue_vue_type_template_id_9587dda4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FiltrarLibros.vue?vue&type=template&id=9587dda4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FiltrarLibros.vue?vue&type=template&id=9587dda4&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Inicio.vue?vue&type=template&id=2bdc2210&":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/Inicio.vue?vue&type=template&id=2bdc2210& ***!
@@ -39351,7 +39589,7 @@ var render = function() {
     "div",
     {
       staticClass: "modal animated fadeIn",
-      attrs: { tabindex: "-1", role: "dialog", id: "myModal" }
+      attrs: { tabindex: "-1", role: "dialog", id: "detalle-libro-modal" }
     },
     [
       _c(
@@ -39484,12 +39722,25 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(6),
+                  _c("div", { staticClass: "row" }, [
+                    _vm._m(6),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col" },
+                      _vm._l(_vm.detallesLibro.categorias, function(categoria) {
+                        return _c("span", { staticClass: "mr-2" }, [
+                          _vm._v(_vm._s(categoria.name + ","))
+                        ])
+                      }),
+                      0
+                    )
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "row justify-content-center" },
-                    _vm._l(_vm.detallesLibro.categorias, function(categoria) {
+                    { staticClass: "row justify-content-center mt-3 mb-2" },
+                    _vm._l(_vm.detallesLibro.etiquetas, function(etiqueta) {
                       return _c("div", { staticClass: "col-auto" }, [
                         _c(
                           "span",
@@ -39499,7 +39750,7 @@ var render = function() {
                               staticClass: "fas fa-tag text-dark mr-2"
                             }),
                             _c("span", { staticClass: "categoria" }, [
-                              _vm._v(_vm._s(categoria.name))
+                              _vm._v(_vm._s(etiqueta.name))
                             ])
                           ]
                         )
@@ -39570,12 +39821,272 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center m-1" }, [
-      _c("div", { staticClass: "col-auto" }, [
-        _c("h6", { staticClass: "font-weight-bold" }, [
-          _vm._v("Categorias/Etiquetas")
-        ])
-      ])
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("p", { staticClass: "font-weight-bold" }, [_vm._v("Categorias: ")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FiltrarLibros.vue?vue&type=template&id=9587dda4&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FiltrarLibros.vue?vue&type=template&id=9587dda4&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal animated fadeIn",
+      attrs: { tabindex: "-1", role: "dialog", id: "filtrar-libros-modal" }
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "modal-dialog modal-sm", attrs: { role: "document" } },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _c(
+              "div",
+              { staticClass: "modal-header px-3 py-2 bg-light text-dark" },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    },
+                    on: { click: _vm.cerrarModal }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "text-dark",
+                        attrs: { "aria-hidden": "true" }
+                      },
+                      [_vm._v("×")]
+                    )
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "modal-body",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "row mt-2 mb-3" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.autor,
+                          expression: "autor"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "autor",
+                        name: "autor",
+                        placeholder: "Ingresa el autor",
+                        required: ""
+                      },
+                      domProps: { value: _vm.autor },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.autor = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mb-3" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.year,
+                          expression: "year"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        id: "year",
+                        name: "year",
+                        placeholder: "Ingresa el año de publicacion",
+                        required: ""
+                      },
+                      domProps: { value: _vm.year },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.year = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mb-3" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.lenguaje,
+                            expression: "lenguaje"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          "aria-label": "Default select example",
+                          name: "lenguaje",
+                          required: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.lenguaje = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { selected: "" } }, [
+                          _vm._v("Desplegar")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "spanish" } }, [
+                          _vm._v("Español")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "english" } }, [
+                          _vm._v("Ingles")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "german" } }, [
+                          _vm._v("Aleman")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "portuguese" } }, [
+                          _vm._v("Portugues")
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _c("input", {
+                      staticClass: "btn btn-block btn-dark",
+                      attrs: { type: "submit", value: "Aplicar Filtros" },
+                      on: { click: _vm.aplicarFiltros }
+                    })
+                  ])
+                ])
+              ]
+            )
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w-100 text-center" }, [
+      _c(
+        "h6",
+        { staticClass: "text-dark m-0", attrs: { id: "texto-encabezado" } },
+        [
+          _c("i", { staticClass: "fas fa-filter mr-2" }),
+          _vm._v("Filtros\n                    ")
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [
+      _c("p", { staticClass: "font-weight-bold" }, [_vm._v("Autor: ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [
+      _c("p", { staticClass: "font-weight-bold" }, [_vm._v("Año: ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [
+      _c("p", { staticClass: "font-weight-bold" }, [_vm._v("Lenguaje: ")])
     ])
   }
 ]
@@ -39712,22 +40223,57 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col" }, [
       _vm.mostrarDetallesLibroModal
-        ? _c(
-            "div",
-            { staticClass: "row" },
-            [
-              _c("detalle-del-libro-modal", {
-                attrs: { detallesLibro: _vm.detallesLibro },
-                on: { cerrarDetallesModal: _vm.cerrarModal }
-              })
-            ],
-            1
-          )
+        ? _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col" },
+              [
+                _c("detalle-del-libro-modal", {
+                  attrs: { detallesLibro: _vm.detallesLibro },
+                  on: { cerrarDetallesModal: _vm.cerrarDetallesModal }
+                })
+              ],
+              1
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.mostrarFiltrarLibrosModal
+        ? _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col" },
+              [
+                _vm.mostrarFiltrarLibrosModal
+                  ? _c("filtrar-libros", {
+                      on: {
+                        aplicarFiltros: _vm.aplicarFiltros,
+                        cerrarFiltroModal: _vm.cerrarFiltroModal
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+          ])
         : _vm._e(),
       _vm._v(" "),
       _vm.agregado == true
         ? _c("div", { staticClass: "row" }, [_vm._m(0)])
         : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mb-3" }, [
+        _c("div", { staticClass: "col-auto" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-dark",
+              on: { click: _vm.mostrarModalDeFiltro }
+            },
+            [_c("i", { staticClass: "fas fa-filter mr-2" }), _vm._v("Filtrar")]
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col" }, [

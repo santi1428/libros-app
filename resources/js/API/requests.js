@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APP_ENDPOINT } from './conf';
+import { APP_ENDPOINT, API_ENDPOINT } from './conf';
 
 const agregarLibro = async (usuarioId, libro) => {
     try{
@@ -12,7 +12,13 @@ const agregarLibro = async (usuarioId, libro) => {
 }
 
 const obtenerLibros = async () => {
-    const request = await axios.get('https://www.etnassoft.com/api/v1/get/?criteria=most_viewed&num_items=4');
+    // const request = await axios.get('https://www.etnassoft.com/api/v1/get/?criteria=most_viewed&num_items=4&lang=english');
+    const request = await axios.get(`${API_ENDPOINT}/?criteria=most_viewed&num_items=4&lang=english`)
+    return request.data;
+}
+
+const obtenerLibrosConFiltro = async (autor, year, lenguaje) => {
+    const request = await axios.get(`${API_ENDPOINT}/?num_items=4&lang=${lenguaje}&publisher_date=${year}&book_author=${autor}`)
     return request.data;
 }
 
@@ -24,5 +30,6 @@ const obtenerMisLibros = async (usuarioId) => {
 export {
     agregarLibro,
     obtenerLibros,
-    obtenerMisLibros
+    obtenerMisLibros,
+    obtenerLibrosConFiltro
 }
