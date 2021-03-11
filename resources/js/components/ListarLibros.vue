@@ -21,13 +21,16 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-3 justify-content-center">
                 <div class="col-auto">
                     <button class="btn btn-outline-dark" @click="mostrarModalDeFiltro"><i class="fas fa-filter mr-2"></i>Filtrar</button>
                 </div>
+                <div class="col-auto">
+                    <h4>Lista</h4>
+                </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-12" id="tabla-libros">
                     <table class="table">
                         <thead>
                             <tr class="text-center">
@@ -38,22 +41,40 @@
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
+                        <tbody v-if="libros.length <= 0" class="text-center">
+                            <tr class="text-center mt-4">
+                                <td></td>
+                                <td></td>
+                                <td><div class="spinner-border text-center" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
                         <tbody v-if="libros.length > 0" class="text-center">
+
                         <!-- <tr v-for="libro in libros" v-bind:key="libro.id"> -->
                          <libro-component v-for="libro in libros" v-bind:key="libro.id" :libro="libro" :usuarioId="usuarioId" v-on:agregado="mostrarAlerta" v-on:mostrarDetallesLibro="mostrarDetallesLibro"></libro-component>
                         <!-- </tr> -->
+<!--                        <div class="row justify-content-center mt-4" v-if="libros.length <= 0">-->
+<!--                            <div class="col-auto">-->
+
+<!--                            </div>-->
+<!--                        </div>-->
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="row justify-content-center mt-4" v-if="libros.length <= 0">
-                <div class="col-auto">
-                    <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
+        </div>
+        <div class="col">
+            <div class="row mt-4">
+                <div class="col">
+                    <grafica-libros :libros="libros"></grafica-libros>
                 </div>
+
             </div>
         </div>
+
     </div>
 </template>
 
@@ -62,12 +83,14 @@ import { obtenerLibros, obtenerMisLibros, obtenerLibrosConFiltro }  from '../API
 import Libro from './Libro';
 import DetalleDelLibroModal from "./DetalleDelLibroModal";
 import FiltrarLibros from "./FiltrarLibros";
+import GraficaLibros from "./GraficaLibros";
 export default {
     name: "ListarLibros",
     components: {
         "detalle-del-libro-modal": DetalleDelLibroModal,
         "libro-component": Libro,
-        "filtrar-libros": FiltrarLibros
+        "filtrar-libros": FiltrarLibros,
+        "grafica-libros": GraficaLibros
     },
     data(){
         return {
@@ -139,5 +162,8 @@ export default {
 </script>
 
 <style>
-
+    #tabla-libros{
+        height: 70vh;
+        overflow: scroll;
+    }
 </style>

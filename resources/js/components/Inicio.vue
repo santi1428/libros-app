@@ -1,11 +1,6 @@
 <template>
   <div class="row">
       <div class="col">
-          <div class="row justify-content-center mb-2">
-              <div class="col-auto">
-                 <h4>Lista</h4>
-              </div>
-          </div>
           <listar-libros></listar-libros>
       </div>
   </div>
@@ -21,14 +16,14 @@ export default {
     },
     data(){
         return {
-            
+
         }
     },
     methods: {
-       
+
     },
     mounted(){
-           
+
     }
 }
 </script>

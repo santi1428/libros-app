@@ -12,13 +12,12 @@ const agregarLibro = async (usuarioId, libro) => {
 }
 
 const obtenerLibros = async () => {
-    // const request = await axios.get('https://www.etnassoft.com/api/v1/get/?criteria=most_viewed&num_items=4&lang=english');
-    const request = await axios.get(`${API_ENDPOINT}/?criteria=most_viewed&num_items=4&lang=english`)
+    const request = await axios.get(`${API_ENDPOINT}/?num_items=50&lang=english`)
     return request.data;
 }
 
 const obtenerLibrosConFiltro = async (autor, year, lenguaje) => {
-    const request = await axios.get(`${API_ENDPOINT}/?num_items=4&lang=${lenguaje}&publisher_date=${year}&book_author=${autor}`)
+    const request = await axios.get(`${API_ENDPOINT}/?num_items=50&lang=${lenguaje}&publisher_date=${year}&book_author=${autor}`)
     return request.data;
 }
 
