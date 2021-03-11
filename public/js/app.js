@@ -2117,6 +2117,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       // watch it
+      this.categorias = [];
+      this.cantidadesPorCategoria = [];
+      this.chartdata.labels = [];
+      this.chartdata.datasets[0].data = [];
       this.libros.forEach(function (libro) {
         libro.categorias.forEach(function (categoria) {
           if (_this.categorias.indexOf(categoria.name) === -1) {

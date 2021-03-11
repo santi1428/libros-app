@@ -39,6 +39,10 @@ export default {
     },
     watch: {
         libros: function(libros, valorViejo) { // watch it
+            this.categorias = [];
+            this.cantidadesPorCategoria = [];
+            this.chartdata.labels = [];
+            this.chartdata.datasets[0].data = [];
             this.libros.forEach(libro => {
                 libro.categorias.forEach(categoria => {
                     if(this.categorias.indexOf(categoria.name) === -1) {
